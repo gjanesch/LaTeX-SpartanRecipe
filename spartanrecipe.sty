@@ -1,3 +1,8 @@
+% Greg Janesch
+% Purpose: To generate a small collection of commands designed to be used with writing basic recipes in LaTeX.
+% Requirements: the cookingsymbols package (all other packages should come with a default TeX installation)
+
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{spartanrecipe}
 
@@ -10,11 +15,11 @@
 \RequirePackage{url}
 
 
-%Set the various formatting lengths for the document
+% Set the various formatting lengths for the document - can be tweaked at will, if needed.
 \setlength{\textwidth}{18.0cm}
 \setlength{\textheight}{24.0cm}
 \setlength{\topmargin}{-0.5cm}
-\setlength{\headheight}{0pt} %0cm
+\setlength{\headheight}{0pt}
 \setlength{\headsep}{0cm}
 \setlength{\topskip}{0cm}
 \setlength{\footskip}{1.4cm}
@@ -24,7 +29,7 @@
 \setlength{\parindent}{0pt}
 
 
-%Set up the cross for separating the notes from the remainder of the recipe
+% Set up the cross for separating the notes from the remainder of the recipe.
 \newcommand{\notecross}{
 	\begin{tikzpicture}[line width=1.5pt]
 		\useasboundingbox (0,0) -- ++(right:4.0cm) -- ++(up:3mm) -- ++(left:3.0cm) -- cycle;
@@ -34,18 +39,19 @@
 }
 
 
-%Overwrite the default \deg command with this one
+% Overwrite the default \deg command with this one; this way, we don't have to invoke math mode every time
+% we want to put a degree symbol in.
 \renewcommand{\deg}[1]{$^{\circ}$#1}
 
 
-%Formatting for recipe name
+% Formatting for recipe name - make the text very large, bold, and all caps to make it stand out.
 \newcommand{\recipename}[1]{
 	{\Huge {\scshape{\bfseries #1}}}
 	\vspace{0.25in}
 }
 
 
-%Environment for the recipe's description
+% Environment for the recipe's description - makes the text a bit larger and emphasized.
 \newenvironment{recipedescription}{
 	\em
 	\large
@@ -54,8 +60,8 @@
 }
 
 
-%Environment for the stats for the recipe; it's designed to be used as an overview
-%to the recipe
+% Environment for the stats for the recipe - a quick summary of serving size, time to make, and other things.
+% It's a tabular environment in order to keep the different stats aligned.
 \newenvironment{recipestats}{
 	\begin{tabular}[C]{ll}
 }{
@@ -64,8 +70,7 @@
 }
 
 
-%Commands for the various recipe statistics; designed to be used only within the
-%recipestats environment
+% Commands for the various recipe statistics; designed to be used only within the recipestats environment.
 \newcommand{\cookingtime}[1]{\Interval & \hspace{-0.3cm} #1}
 \newcommand{\servings}[1]{{\Large \Dish} & \hspace{-0.3cm} #1}
 \newcommand{\oventime}[1]{{\Large \Oven} & \hspace{-0.3cm} #1}
@@ -73,8 +78,8 @@
 \newcommand{\source}[1]{\PaperLandscape & \hspace{-0.3cm} #1}
 
 
-%Environment for the ingredients; the table is set up so that those with a shorter list of
-%ingredients can use just one columns, and those with more can have two columns
+% Environment for the ingredients -  a five column table, set up so that those with a shorter list of ingredients 
+% can use just the first two columns, and those with more can use all five with the middle one as whitespace
 \newenvironment{ingredients}[1]{
 	{\large {\bf Ingredients#1:}} \\
 	\vspace{-0.1cm}
@@ -86,7 +91,7 @@
 }
 
 
-%Environment for the list of recipe equipment
+% Environment for the list of recipe equipment.
 \newenvironment{equipment}{
 	{\large {\bf Equipment:}} \\
 	\vspace{-0.1cm}
@@ -97,7 +102,7 @@
 }
 
 
-%Environment for the recipe's procedure/steps
+% Environment for the recipe's procedure/steps - basically just a tweaked enumerate.
 \newenvironment{procedure}{
 	{\large {\bf Procedure:}} \\
 	\vspace{-0.5cm}
@@ -108,7 +113,7 @@
 }
 
 
-%
+% Environment for notes or variations on the recipe - just a bullet list with a little formatting.
 \newenvironment{notes}{
 	\notecross
 	{\large {\bf {\it Notes/Variations}}}: \\
