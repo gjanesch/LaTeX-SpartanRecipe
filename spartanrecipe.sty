@@ -1,0 +1,120 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{spartanrecipe}
+
+\RequirePackage{tikz}				%Used for drawing the cross before the notes
+\RequirePackage{bold-extra}			%Needed to get \scshape and \bfseries to work together
+\RequirePackage{multicol}			%Used for multicolumn environments - may not be relevant
+\RequirePackage{cookingsymbols}		%Used to get some of the cooking symbols for the summary
+\RequirePackage[clock,misc]{ifsym}		%Used for some other symbols
+\RequirePackage{array}
+\RequirePackage{url}
+
+
+%Set the various formatting lengths for the document
+\setlength{\textwidth}{18.0cm}
+\setlength{\textheight}{24.0cm}
+\setlength{\topmargin}{-0.5cm}
+\setlength{\headheight}{0pt} %0cm
+\setlength{\headsep}{0cm}
+\setlength{\topskip}{0cm}
+\setlength{\footskip}{1.4cm}
+\setlength{\evensidemargin}{-2.0cm}
+\setlength{\voffset}{-0.5cm}
+\setlength{\hoffset}{-3.0cm}
+\setlength{\parindent}{0pt}
+
+
+%Set up the cross for separating the notes from the remainder of the recipe
+\newcommand{\notecross}{
+	\begin{tikzpicture}[line width=1.5pt]
+		\useasboundingbox (0,0) -- ++(right:4.0cm) -- ++(up:3mm) -- ++(left:3.0cm) -- cycle;
+		\draw (-5mm, 1mm) -- ++(right:3.5cm);
+		\draw (-0.2cm, 4mm) -- ++(down:1.0cm);
+	\end{tikzpicture} \\
+}
+
+
+%Overwrite the default \deg command with this one
+\renewcommand{\deg}[1]{$^{\circ}$#1}
+
+
+%Formatting for recipe name
+\newcommand{\recipename}[1]{
+	{\Huge {\scshape{\bfseries #1}}}
+	\vspace{0.25in}
+}
+
+
+%Environment for the recipe's description
+\newenvironment{recipedescription}{
+	\em
+	\large
+}{
+	\vspace{0.2in}
+}
+
+
+%Environment for the stats for the recipe; it's designed to be used as an overview
+%to the recipe
+\newenvironment{recipestats}{
+	\begin{tabular}[C]{ll}
+}{
+	\end{tabular}
+	\vspace{0.4cm}
+}
+
+
+%Commands for the various recipe statistics; designed to be used only within the
+%recipestats environment
+\newcommand{\cookingtime}[1]{\Interval & \hspace{-0.3cm} #1}
+\newcommand{\servings}[1]{{\Large \Dish} & \hspace{-0.3cm} #1}
+\newcommand{\oventime}[1]{{\Large \Oven} & \hspace{-0.3cm} #1}
+\newcommand{\stovetime}[1]{{\Large \Gloves} & \hspace{-0.3cm} #1}
+\newcommand{\source}[1]{\PaperLandscape & \hspace{-0.3cm} #1}
+
+
+%Environment for the ingredients; the table is set up so that those with a shorter list of
+%ingredients can use just one columns, and those with more can have two columns
+\newenvironment{ingredients}[1]{
+	{\large {\bf Ingredients#1:}} \\
+	\vspace{-0.1cm}
+	\begin{tabular}{>{\raggedleft}p{0.1\textwidth}p{0.32\textwidth}p{0.05\textwidth}
+	>{\raggedleft}p{0.1\textwidth}p{0.32\textwidth}}
+}{
+	\end{tabular}
+	\vspace{0.4cm}
+}
+
+
+%Environment for the list of recipe equipment
+\newenvironment{equipment}{
+	{\large {\bf Equipment:}} \\
+	\vspace{-0.1cm}
+	\begin{tabular}{l}
+}{
+	\end{tabular}
+	\vspace{0.4cm}
+}
+
+
+%Environment for the recipe's procedure/steps
+\newenvironment{procedure}{
+	{\large {\bf Procedure:}} \\
+	\vspace{-0.5cm}
+	\begin{enumerate}
+	\setlength{\itemsep}{0cm}
+}{
+	\end{enumerate}
+}
+
+
+%
+\newenvironment{notes}{
+	\notecross
+	{\large {\bf {\it Notes/Variations}}}: \\
+	\vspace{-0.5cm}
+	\begin{itemize}
+	\setlength{\itemsep}{0cm}
+}{
+	\end{itemize}
+}
